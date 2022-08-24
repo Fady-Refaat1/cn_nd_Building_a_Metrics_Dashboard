@@ -32,7 +32,7 @@ jobs:
           context: reference-app/backend
           platforms: linux/amd64
           push: true
-          tags: fadyrefaat/Dashboard-backend:latest
+          tags: fadyrefaat/dashboard-backend:latest
       -
         name: Build and push
         uses: docker/build-push-action@v2
@@ -40,4 +40,4 @@ jobs:
           context: reference-app/frontend
           platforms: linux/amd64
           push: true
-          tags: fadyrefaat/Dashboard-frontend:latest
+          tags: fadyrefaat/dashboard-frontend:latest

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: fadyrefaat/Dashboard-backend:latest
+        image: fadyrefaat/dashboard-backend:latest
         ports:
         - containerPort: 8081
 ---
