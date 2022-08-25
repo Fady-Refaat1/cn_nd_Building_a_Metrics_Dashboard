@@ -6,6 +6,7 @@ import logging
 from flask import Flask, request, jsonify
 from flask_pymongo import PyMongo
 from jaeger_client import Config
+from flask_opentracing import FlaskTracing
 
 from jaeger_client.metrics.prometheus import PrometheusMetricsFactory
 from prometheus_flask_exporter import PrometheusMetrics
