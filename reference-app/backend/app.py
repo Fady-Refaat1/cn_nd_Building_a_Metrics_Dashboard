@@ -36,7 +36,7 @@ def init_tracer(service):
         config={
             "sampler": {"type": "const", "param": 1},
             "logging": True,
-            "local_agent": {'reporting_host': JAEGER_HOST},
+            "local_agent": {'reporting_host': "simplest-query.observability.svc.cluster.local"},
             "reporter_batch_size": 1,
         },
         service_name=service,
