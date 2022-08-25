@@ -35,8 +35,21 @@ vagrant plugin install vagrant-scp
 vagrant scp backend.yaml backend.yaml
 vagrant scp frontend.yaml frontend.yaml
 vagrant scp trial.yaml trial.yaml
-
+vagrant scp grafana-svc.yaml grafana-svc.yaml
 
 kubectl apply -f backend.yaml
 kubectl apply -f frontend.yaml
+kubectl apply -f grafana-svc.yaml
+
 kubectl apply -f trial.yaml
+
+
+kubectl apply -n observability -f - <<EOF
+apiVersion: jaegertracing.io/v1
+kind: Jaeger
+metadata:
+  name: simplest
+EOF
+
+
+kubectl -n observability  port-forward service/simplest-query --address 0.0.0.0 16686:16686

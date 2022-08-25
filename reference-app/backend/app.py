@@ -3,6 +3,7 @@ import logging
 import re
 import logging
 
+from os import getenv
 from flask import Flask, request, jsonify
 from flask_pymongo import PyMongo
 from jaeger_client import Config
@@ -27,12 +28,15 @@ logging.getLogger("").handlers = []
 logging.basicConfig(format="%(message)s", level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
+JAEGER_HOST = getenv('JAEGER_HOST', 'localhost')
+
 def init_tracer(service):
 
     config = Config(
         config={
             "sampler": {"type": "const", "param": 1},
             "logging": True,
+            "local_agent": {'reporting_host': JAEGER_HOST},
             "reporter_batch_size": 1,
         },
         service_name=service,

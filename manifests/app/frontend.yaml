@@ -17,6 +17,15 @@ spec:
         image: fadyrefaat/dashboard-frontend:latest
         ports:
         - containerPort: 8080
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "64m"
+          limits:
+            memory: "256Mi"
+            cpu: "256m"
+      restartPolicy: Always
 ---
 apiVersion: v1
 kind: Service
