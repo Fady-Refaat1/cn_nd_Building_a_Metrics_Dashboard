@@ -13,13 +13,13 @@ export jaeger_version=v1.28.0
 # jaegertracing.io_jaegers_crd.yaml
 kubectl create -f https://raw.githubusercontent.com/jaegertracing/jaeger-operator/${jaeger_version}/deploy/crds/jaegertracing.io_jaegers_crd.yaml
 # service_account.yaml
-kubectl create -n observability -f https://raw.githubusercontent.com/jaegertracing/jaeger-operator/${jaeger_version}/deploy/service_account.yaml
+kubectl create  -f https://raw.githubusercontent.com/jaegertracing/jaeger-operator/${jaeger_version}/deploy/service_account.yaml
 # role.yaml
-kubectl create -n observability -f https://raw.githubusercontent.com/jaegertracing/jaeger-operator/${jaeger_version}/deploy/role.yaml
+kubectl create  -f https://raw.githubusercontent.com/jaegertracing/jaeger-operator/${jaeger_version}/deploy/role.yaml
 # role_binding.yaml
-kubectl create -n observability -f https://raw.githubusercontent.com/jaegertracing/jaeger-operator/${jaeger_version}/deploy/role_binding.yaml
+kubectl create  -f https://raw.githubusercontent.com/jaegertracing/jaeger-operator/${jaeger_version}/deploy/role_binding.yaml
 # operator.yaml
-kubectl create -n observability -f https://raw.githubusercontent.com/jaegertracing/jaeger-operator/${jaeger_version}/deploy/operator.yaml
+kubectl create -f https://raw.githubusercontent.com/jaegertracing/jaeger-operator/${jaeger_version}/deploy/operator.yaml
 
 # cluster_role.yaml
 kubectl create -f https://raw.githubusercontent.com/jaegertracing/jaeger-operator/${jaeger_version}/deploy/cluster_role.yaml
@@ -44,7 +44,7 @@ kubectl apply -f grafana-svc.yaml
 kubectl apply -f trial.yaml
 
 
-kubectl apply -n observability -f - <<EOF
+kubectl apply  -f - <<EOF
 apiVersion: jaegertracing.io/v1
 kind: Jaeger
 metadata:
@@ -52,4 +52,9 @@ metadata:
 EOF
 
 
-kubectl -n observability  port-forward service/simplest-query --address 0.0.0.0 16686:16686
+kubectl port-forward service/simplest-query --address 0.0.0.0 16686:16686
+for i in 1 2 3 4 5 6 7 8 9; do curl localhost:8081; done
+
+
+kubectl --namespace monitoring port-forward svc/prometheus-grafana --address 0.0.0.0 3000:80
+Forwarding from 0.0.0.0:3000 -> 3000
