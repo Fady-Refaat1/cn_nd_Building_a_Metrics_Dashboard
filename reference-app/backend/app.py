@@ -3,7 +3,7 @@ import re
 import requests
 
 
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, make_response
 from flask_opentracing import FlaskTracing
 from jaeger_client import Config
 from jaeger_client.metrics.prometheus import PrometheusMetricsFactory
@@ -17,7 +17,7 @@ RequestsInstrumentor().instrument()
 
 metrics = GunicornInternalPrometheusMetrics(app)
 # static information as metric
-metrics.info("app_info", "Application info", version="1.0.3")
+metrics.info("app_info", "Backend service", version="1.0.1")
 
 logging.getLogger("").handlers = []
 logging.basicConfig(format="%(message)s", level=logging.DEBUG)
@@ -53,9 +53,15 @@ def homepage():
     with tracer.start_span('hello-world'):
         return "Hello World"
 
-@app.route('/error')
+@app.route('/error-404')
 def error():
-    raise Exception('Fail')
+    with tracer.start_span('error-404'):
+       return 'error400',404
+
+@app.route('/error-500')
+def error():
+    with tracer.start_span('error-500'):
+       return 'error500',500
 
 @app.route("/api")
 def my_api():
