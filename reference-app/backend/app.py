@@ -53,16 +53,6 @@ def homepage():
     with tracer.start_span('hello-world'):
         return "Hello World"
 
-@app.errorhandler(404)
-def handel():
-    with tracer.start_span('error-404'):
-       return 'error-404'
-
-@app.route('/error-404')
-def error4xx():
-    with tracer.start_span('error-404'):
-       Response("error-404", status=404, mimetype='application/json')
-
 @app.route('/error-500')
 def error5xx():
     with tracer.start_span('error-500'):
