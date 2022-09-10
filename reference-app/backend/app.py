@@ -5,18 +5,20 @@ import requests
 
 from flask import Flask, jsonify, request, Response
 from flask_opentracing import FlaskTracing
+from flask_cors import CORS
 from jaeger_client import Config
 from flask_pymongo import PyMongo
 from jaeger_client.metrics.prometheus import PrometheusMetricsFactory
-from prometheus_flask_exporter import PrometheusMetrics
+from prometheus_flask_exporter.multiprocess import GunicornInternalPrometheusMetrics
 
 app = Flask(__name__)
+CORS(app)
 
 app.config['MONGO_DBNAME'] = 'example-mongodb'
 app.config['MONGO_URI'] = 'mongodb://example-mongodb-svc.default.svc.cluster.local:27017/example-mongodb'
 mongo = PyMongo(app)
 
-metrics = PrometheusMetrics(app)
+metrics = GunicornInternalPrometheusMetrics(app)
 metrics.info("app_info", "Backend service", version="1.0.1")
 
 logging.getLogger("").handlers = []
