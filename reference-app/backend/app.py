@@ -54,12 +54,12 @@ def homepage():
         return "Hello World"
 
 @app.route('/error-404')
-def error():
+def error4xx():
     with tracer.start_span('error-404'):
        return 'error400',404
 
 @app.route('/error-500')
-def error():
+def error5xx():
     with tracer.start_span('error-500'):
        return 'error500',500
 
