@@ -7,3 +7,4 @@ pylint
 requests
 Flask-Opentracing
 Flask-PyMongo
+flask_cors
