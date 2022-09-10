@@ -6,4 +6,4 @@ prometheus-flask-exporter
 pylint
 requests
 Flask-Opentracing
-pymongo
+Flask-PyMongo
