@@ -2,11 +2,8 @@ Flask
 gunicorn
 jaeger-client
 prometheus-client
-opentelemetry-instrumentation-flask
-opentelemetry-instrumentation-requests
-opentelemetry-instrumentation
-opentelemetry-sdk
 prometheus-flask-exporter
 pylint
 requests
 Flask-Opentracing
+pymongo
