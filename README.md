@@ -15,6 +15,13 @@ SLI : The performance level achived example 99% uptime based on SLOs like the ac
 
 ## Creating SLI metrics.
 *TODO:* It is important to know why we want to measure certain metrics for our customer. Describe in detail 5 metrics to measure these SLIs. 
+<ol>
+    <li>Latency.the time taken to respond to a request.</li>
+    <li>Uptime.time of availability of the app</li>
+    <li>CPU Utilization</li>
+    <li>Network Capacity. average bandwidth in month</li>
+    <li>memory usage</li>
+</ol>
 
 ## Create a Dashboard to measure our SLIs
 *TODO:* Create a dashboard to measure the uptime of the frontend and backend services We will also want to measure to measure 40x and 50x errors. Create a dashboard that show these values over a 24 hour period and take a screenshot.

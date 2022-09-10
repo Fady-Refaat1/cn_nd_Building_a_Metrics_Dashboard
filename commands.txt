@@ -34,14 +34,9 @@ kubectl get pods,svc -n observability
 vagrant plugin install vagrant-scp
 vagrant scp backend.yaml backend.yaml
 vagrant scp frontend.yaml frontend.yaml
-vagrant scp trial.yaml trial.yaml
-vagrant scp grafana-svc.yaml grafana-svc.yaml
 
 kubectl apply -f backend.yaml
 kubectl apply -f frontend.yaml
-kubectl apply -f grafana-svc.yaml
-
-kubectl apply -f trial.yaml
 
 
 kubectl apply  -f - <<EOF
