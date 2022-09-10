@@ -3,7 +3,7 @@ import re
 import requests
 
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, Response
 from flask_opentracing import FlaskTracing
 from jaeger_client import Config
 from flask_pymongo import PyMongo
@@ -56,12 +56,12 @@ def homepage():
 @app.route('/error-404')
 def error4xx():
     with tracer.start_span('error-404'):
-       return 'error400',404
+       Response("error-404", status=404, mimetype='application/json')
 
 @app.route('/error-500')
 def error5xx():
     with tracer.start_span('error-500'):
-       return 'error500',500
+       Response("error-500", status=500, mimetype='application/json')
 
 @app.route("/api")
 def my_api():
