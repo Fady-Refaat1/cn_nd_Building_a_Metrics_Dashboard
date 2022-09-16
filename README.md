@@ -160,7 +160,7 @@ Severity: critical
 
 Description: when call the star endpoint it return 500 status code so we need to return the response 200. that is critical because it may we can't make DB connection
 
-![alt text](https://github.com/Fady-Refaat1/cn_nd_Building_a_Metrics_Dashboard/blob/master/answer-img/reportScreenShot.png)
+<!-- ![alt text](https://github.com/Fady-Refaat1/cn_nd_Building_a_Metrics_Dashboard/blob/master/answer-img/reportScreenShot.png) -->
 
 ## Creating SLIs and SLOs
 *TODO:* We want to create an SLO guaranteeing that our application has a 99.95% uptime per month. Name four SLIs that you would use to measure the success of this SLO.
