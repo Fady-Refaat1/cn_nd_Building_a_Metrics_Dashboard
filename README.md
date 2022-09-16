@@ -160,13 +160,40 @@ Severity: critical
 
 Description: when call the star endpoint it return 500 status code so we need to return the response 200. that is critical because it may we can't make DB connection
 
-<!-- ![alt text](https://github.com/Fady-Refaat1/cn_nd_Building_a_Metrics_Dashboard/blob/master/answer-img/reportScreenShot.png) -->
+![alt text](https://github.com/Fady-Refaat1/cn_nd_Building_a_Metrics_Dashboard/blob/master/answer-img/report-screenShot.png)
 
 ## Creating SLIs and SLOs
 *TODO:* We want to create an SLO guaranteeing that our application has a 99.95% uptime per month. Name four SLIs that you would use to measure the success of this SLO.
 
+<ol>
+<li>Latency : 95% of the requests takes 30 - 40 ms to complete</li>
+<li>Uptime : 99.95% service should be available </li>
+<li>Error Rate : must be less than 0.5 % of 4xx or 5xx errors</li>
+<li>Resource Usage: CPU and RAM usage must not exceed 95% per month.</li>
+</ol>
+
 ## Building KPIs for our plan
 *TODO*: Now that we have our SLIs and SLOs, create a list of 2-3 KPIs to accurately measure these metrics as well as a description of why those KPIs were chosen. We will make a dashboard for this, but first write them down here.
 
+<ol>
+<li>Uptime : Due to our SLOs we want the application up 99.95% per month </li>
+<li>Error Rate : we want the application run without failure so we want the fail requests than 0.05% per month</li>
+<li>Resource Usage: To can see the consumption so let us know if we want to expand the resources to our solution or not</li>
+<li>Latency : when the latency within the 30 - 40 that indicate of healthy application that have suitable memory to serve the client </li>
+</ol>
+
 ## Final Dashboard
 *TODO*: Create a Dashboard containing graphs that capture all the metrics of your KPIs and adequately representing your SLIs and SLOs. Include a screenshot of the dashboard here, and write a text description of what graphs are represented in the dashboard.
+
+![alt text](https://github.com/Fady-Refaat1/cn_nd_Building_a_Metrics_Dashboard/blob/master/answer-img/FinalDashboard.png)
+
+
+# Description of the dashboard:
+<ul>
+<li>Uptime: the up time is 87.5 %</li>
+<li>Error Rate: the percentage of failed requests over success requests</li>
+<li>CPU Usage: CPU utilization by the service</li>
+<li>Memory Usage: Memory utilization by the service</li>
+<li>50x, 40x Errors: 50x, 40x respond from our service</li>
+</ul>
+
