@@ -40,9 +40,6 @@ Tracing_Flask_App
 ```
 import logging
 import os
-import re
-import requests
-
 
 from flask import Flask, jsonify, request, Response
 from flask_opentracing import FlaskTracing
@@ -116,57 +113,16 @@ def my_api():
     return jsonify(repsonse=answer)
 
 
-@app.route("/star", methods=["POST"])
+@app.route("/star")
 @by_full_path_counter
 @by_endpoint_counter
 def add_star():
     star = mongo.db.stars
-    name = request.json["name"]
-    distance = request.json["distance"]
-    star_id = star.insert({"name": name, "distance": distance})
+    star_id = star.insert({"name": "name", "distance": "distance"})
     new_star = star.find_one({"_id": star_id})
     output = {"name": new_star["name"], "distance": new_star["distance"]}
     return jsonify({"result": output})
 
-
-@app.route("/trace")
-@by_full_path_counter
-@by_endpoint_counter
-def trace():
-    def remove_tags(text):
-        tag = re.compile(r"<[^>]+>")
-        return tag.sub("", text)
-
-    with tracer.start_span("get-python-jobs") as span:
-        res = requests.get("https://jobs.github.com/positions.json?description=python")
-        span.log_kv({"event": "get jobs count", "count": len(res.json())})
-        span.set_tag("jobs-count", len(res.json()))
-
-        jobs_info = []
-        for result in res.json():
-            jobs = {}
-            with tracer.start_span("request-site") as site_span:
-                logger.info(f"Getting website for {result['company']}")
-                try:
-                    jobs["description"] = remove_tags(result["description"])
-                    jobs["company"] = result["company"]
-                    jobs["company_url"] = result["company_url"]
-                    jobs["created_at"] = result["created_at"]
-                    jobs["how_to_apply"] = result["how_to_apply"]
-                    jobs["location"] = result["location"]
-                    jobs["title"] = result["title"]
-                    jobs["type"] = result["type"]
-                    jobs["url"] = result["url"]
-
-                    jobs_info.append(jobs)
-                    site_span.set_tag("http.status_code", res.status_code)
-                    site_span.set_tag("company-site", result["company"])
-                except Exception:
-                    logger.error(f"Unable to get site for {result['company']}")
-                    site_span.set_tag("http.status_code", res.status_code)
-                    site_span.set_tag("company-site", result["company"])
-
-    return jsonify(jobs_info)
 
 if __name__ == "__main__":
     app.run(debug=True,)
