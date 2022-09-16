@@ -1,3 +1,8 @@
+### Overview architecture 
+
+![alt text](https://github.com/Fady-Refaat1/cn_nd_Building_a_Metrics_Dashboard/blob/master/answer-img/project-overview.png)
+
+
 ## Verify the monitoring installation
 
 *TODO:* run `kubectl` command to show the running pods and services for all components. Take a screenshot of the output and include it here to verify the installation
