@@ -4,6 +4,9 @@ metadata:
   name: backend-app
   annotations:
     "sidecar.jaegertracing.io/inject": "true"
+    prometheus.io/scrape: 'true'
+    prometheus.io/path: /metrics
+    prometheus.io/port: backend
 spec:
   replicas: 3
   selector:
@@ -15,21 +18,40 @@ spec:
         app: backend
     spec:
       containers:
-      - name: backend
-        image: fadyrefaat/dashboard-backend:latest
-        ports:
-        - containerPort: 8081
+        - env:
+          - name: JAEGER_AGENT_HOST
+            value: fady-traces-agent.observability.svc.cluster.local
+          name: backend
+          image: fadyrefaat/dashboard-backend:latest
+          ports:
+          - containerPort: 8080
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "64m"
+            limits:
+              memory: "256Mi"
+              cpu: "256m"
+      restartPolicy: Always
 ---
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    prometheus.io/port: "9090"
+    prometheus.io/scrape: "true"
   name: backend-service
+  labels:
+    app: backend
 spec:
   selector:
     app: backend
   ports:
-    - port: 8081
+    - name: backend
+      port: 8081
       targetPort: 8080
+      nodePort: 30001
   type: LoadBalancer
 ---
 apiVersion: monitoring.coreos.com/v1
@@ -47,7 +69,7 @@ spec:
   endpoints:
   - port: backend
     path: /metrics
-    interval: 15s
+    interval: 20s
   namespaceSelector:
     matchNames:
     - default

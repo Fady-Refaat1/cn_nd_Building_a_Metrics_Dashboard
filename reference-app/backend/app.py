@@ -1,4 +1,5 @@
 import logging
+import os
 import re
 import requests
 
@@ -21,11 +22,14 @@ mongo = PyMongo(app)
 metrics = GunicornInternalPrometheusMetrics(app)
 metrics.info("app_info", "Backend service", version="1.0.1")
 
+by_full_path_counter = metrics.counter('full_path_counter', 'counting requests by full path', labels={'full_path': lambda: request.full_path})
+by_endpoint_counter = metrics.counter('endpoint_counter', 'counting request by endpoint', labels={'endpoint': lambda: request.endpoint})
+
 logging.getLogger("").handlers = []
 logging.basicConfig(format="%(message)s", level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-
+JAEGER_AGENT_HOST = os.getenv('JAEGER_AGENT_HOST', 'localhost')
 
 
 def init_tracer(service):
@@ -51,22 +55,30 @@ flask_tracer = FlaskTracing(tracer, True, app)
 
 
 @app.route("/")
+@by_full_path_counter
+@by_endpoint_counter
 def homepage():
     with tracer.start_span('hello-world'):
         return "Hello World"
 
 @app.route('/error-500')
+@by_full_path_counter
+@by_endpoint_counter
 def error5xx():
     with tracer.start_span('error-500'):
        Response("error-500", status=500, mimetype='application/json')
 
 @app.route("/api")
+@by_full_path_counter
+@by_endpoint_counter
 def my_api():
     answer = "something"
     return jsonify(repsonse=answer)
 
 
 @app.route("/star", methods=["POST"])
+@by_full_path_counter
+@by_endpoint_counter
 def add_star():
     star = mongo.db.stars
     name = request.json["name"]
@@ -78,6 +90,8 @@ def add_star():
 
 
 @app.route("/trace")
+@by_full_path_counter
+@by_endpoint_counter
 def trace():
     def remove_tags(text):
         tag = re.compile(r"<[^>]+>")
