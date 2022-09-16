@@ -78,7 +78,7 @@ def my_api():
 @by_endpoint_counter
 def add_star():
     star = mongo.db.stars
-    star_id = star.insert({"name": name, "distance": distance})
+    star_id = star.insert({"name": "name", "distance": "distance"})
     new_star = star.find_one({"_id": star_id})
     output = {"name": new_star["name"], "distance": new_star["distance"]}
     return jsonify({"result": output})
