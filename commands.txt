@@ -1,3 +1,6 @@
+Vagrant Up
+Vagrant ssh
+# install 
 curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
 
 kubectl create namespace monitoring
@@ -50,6 +53,3 @@ kubectl --namespace monitoring port-forward svc/prometheus-grafana --address 0.0
 Forwarding from 0.0.0.0:3000 -> 3000
 
 fady-traces-query.observability.svc.cluster.local:16686
-
-metrics "uptime"
-    sum(up{service=~"backend-service|frontend-service"})
