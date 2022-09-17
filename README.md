@@ -43,7 +43,7 @@ SLI : The performance level achived example 99% uptime based on SLOs like the ac
 ## Create a Dashboard to measure our SLIs
 *TODO:* Create a dashboard to measure the uptime of the frontend and backend services We will also want to measure to measure 40x and 50x errors. Create a dashboard that show these values over a 24 hour period and take a screenshot.
 
-![alt text](https://github.com/Fady-Refaat1/cn_nd_Building_a_Metrics_Dashboard/blob/master/answer-img/measure_SLIs.png)
+![alt text](https://github.com/Fady-Refaat1/cn_nd_Building_a_Metrics_Dashboard/blob/master/answer-img/measurement_of_SLIs.png)
 
 ## Tracing our Flask App
 *TODO:*  We will create a Jaeger span to measure the processes on the backend. Once you fill in the span, provide a screenshot of it here. Also provide a (screenshot) sample Python file containing a trace and span code used to perform Jaeger traces on the backend service.
@@ -180,12 +180,21 @@ Description: when call the star endpoint it return 500 status code so we need to
 ## Building KPIs for our plan
 *TODO*: Now that we have our SLIs and SLOs, create a list of 2-3 KPIs to accurately measure these metrics as well as a description of why those KPIs were chosen. We will make a dashboard for this, but first write them down here.
 
-<ol>
-<li>Uptime : Due to our SLOs we want the application up 99.95% per month </li>
-<li>Error Rate : we want the application run without failure so we want the fail requests than 0.05% per month</li>
-<li>Resource Usage: To can see the consumption so let us know if we want to expand the resources to our solution or not</li>
-<li>Latency : when the latency within the 30 - 40 that indicate of healthy application that have suitable memory to serve the client </li>
-</ol>
+
+1. Latency : when the latency within the 30 - 40 that indicate of healthy application that have suitable memory to serve the client in month 
+   - performance -  This KPI shows the application's overall performance.
+   - Monthly uptime - This KPI shows the application's overall usability when the Latency avg per request is low or within 30 - 40 ms.
+2. Uptime : Due to our SLOs we want the application up 99.95% per month
+   - Monthly downtime - This KPI shows the number of the downtime of the  application.
+   - Avg monthly Uptime - This KPI shows the application's overall usabilityThis KPI shows the application's overall usability . 
+3. Error Rate : we want the application run without failure so we want the fail requests than 0.05% per month.
+   - Monthly uptime - This KPI shows the application's overall usability when the failure rate is low.
+   - 50x code responses per month - this KPI shows downtime of the application.
+
+4. Resource Usage: To can see the consumption so let us know if we want to expand the resources to our solution or not in month.
+   - Average monthly Resource usage of all the pods - This KPI was selected to show the total amount of resources utilized by all the pods needed to run the application.
+   - Monthly quota limit - This KPI was selected to show whether the application is using more resources than its allotted quota.
+
 
 ## Final Dashboard
 *TODO*: Create a Dashboard containing graphs that capture all the metrics of your KPIs and adequately representing your SLIs and SLOs. Include a screenshot of the dashboard here, and write a text description of what graphs are represented in the dashboard.
